@@ -1,0 +1,150 @@
+/* Base Styles */
+#about-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--primary);
+  color: var(--background-1);
+  border-radius: var(--regular-border);
+  margin: 20px 0;
+  padding: 20px;
+}
+
+/* Section Header */
+.about-header {
+  width: 100%;
+  padding-left: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--background-1);
+  text-align: left;
+}
+
+/* Flex Container */
+.about {
+  display: flex;
+  border-radius: var(--regular-border);
+  width: 100%;
+  gap: 20px;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+/* Each Section (Intro, Image, Skills) */
+.about div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--regular-border);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Intro Section */
+.summary-intro {
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 10px;
+}
+
+.summary-intro .intro {
+  color: var(--text);
+}
+
+/* User Image */
+.user-image{
+    clip-path: circle();
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+.user-image img{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Skills Section */
+.skill {
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.skill h2 {
+  font-size: 40px;
+  letter-spacing: 2px;
+  color: var(--background-1);
+}
+
+.skill ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.skill ul li {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  fill: var(--background-1);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about > div {
+    width: 90%;
+    align-items: center;
+    text-align: center;
+    height: auto;
+  }
+
+  .user-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .user-image img {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .skill h2 {
+    font-size: 28px;
+  }
+
+  .skill ul li {
+    font-size: 16px;
+  }
+
+  /* Optional: reduce about-header font-size on smaller screens */
+  .about-header {
+    font-size: 24px;
+    padding-left: 10px;
+  }
+
+  /* Adjust summary intro padding and alignment */
+  .summary-intro {
+    padding: 0 10px;
+    align-items: center;
+    justify-content: center;
+  }
+}

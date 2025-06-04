@@ -1,0 +1,28 @@
+.socials{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    column-gap: 4px;
+}
+
+.socials li{
+    display: flex;
+    position: relative;
+    transition: ease 0.5s;
+}
+
+.socials li a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    color: var(--text);
+    fill: var(--text);
+    border-radius: 30px;
+}
+
+.socials li a:hover{
+    background-color: var(--passive-hover);
+    color: var(--primary);
+    fill: var(--primary);
+}

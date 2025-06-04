@@ -1,0 +1,15 @@
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+}
+
+/* .logo*/
+.logo{
+    background: linear-gradient(#7839CF, #9250ee, #b381f8 );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+    font-weight: 600;
+}

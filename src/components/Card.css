@@ -1,0 +1,127 @@
+.card {
+  background-color: var(--background-1);
+  border: 1px solid var(--primary);
+  border-radius: var(--regular-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--primary);
+}
+
+.card-content {
+  padding: 20px;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  text-justify: inter-word;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  text-justify: inter-word;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+.card-actions a,
+.card-actions button {
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary);
+  color: var(--background-1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-actions a:hover,
+.card-actions button:hover {
+  background-color: var(--active-hover);
+}
+
+/* Media query for tablets and smaller desktops */
+@media (max-width: 750px) {
+  .card {
+    max-width: 90%;
+    margin: 20px auto;
+  }
+
+  /* If the card contains images */
+  .card img {
+    height: auto;
+  }
+}
+
+/* Media query for phones and small devices */
+@media (max-width: 600px) {
+  .card {
+    max-width: 100%;
+    margin: 10px auto;
+    border-radius: calc(var(--regular-border) / 2);
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .card-title {
+    font-size: 1.25rem; /* smaller title */
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
+
+  .card-actions a,
+  .card-actions button {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}
+

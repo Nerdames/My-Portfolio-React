@@ -1,0 +1,115 @@
+/* Base header layout */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 0 20px;
+  background-color: var(--overlay-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 0 0 var(--regular-border) var(--regular-border);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  width: 100%;
+}
+
+/* Scroll-up/down effects */
+.header.hide {
+  transform: translateY(-100%);
+}
+.header.show {
+  transform: translateY(0);
+}
+
+/* Flex groups */
+.header-left,
+.header-center,
+.header-right,
+.header-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.header-right {
+  gap: 15px;
+}
+
+.header-toggle {
+  margin: 0;
+}
+
+/* Toggle button (hidden by default) */
+.showsidebar {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  fill: var(--text);
+  border-radius: 30px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.showsidebar:hover {
+  background-color: var(--passive-hover);
+}
+
+/* === MEDIA QUERIES === */
+
+/* Medium screens (<= 750px) */
+@media (max-width: 750px) {
+  .header-center,
+  .header-right {
+    display: none;
+  }
+
+  .showsidebar {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+
+  .showsidebar .bar {
+    height: 3px;
+  }
+}
+
+/* Small screens (<= 600px) */
+@media (max-width: 600px) {
+  .header {
+    height: 60px;
+    padding: 0 15px;
+  }
+
+  .showsidebar {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+  }
+
+  .showsidebar .bar {
+    height: 4px;
+  }
+}
+
+/* Mobile screens (<= 450px) */
+@media (max-width: 450px) {
+  .header {
+    padding: 0 12px;
+  }
+
+  .showsidebar {
+    display: flex;
+  }
+}

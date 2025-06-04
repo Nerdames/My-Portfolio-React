@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
+import Header from './components/Header';
+import Home from './components/Home';
+import Blogs from './components/Blogs';
+import Designs from './components/Designs';
+import About from './components/About';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+import SideBar from './components/SideBar';
+
 function App() {
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const toggleSidebar = () => {
+    setShowSidebar(prev => !prev);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header toggleSidebar={toggleSidebar} showSidebar={showSidebar} />
+      <SideBar isVisible={showSidebar} hideSidebar={toggleSidebar} />
+      <Home />
+      <Blogs />
+      <Designs />
+      <About />
+      <Footer />
+      <ScrollToTop />
     </div>
   );
 }

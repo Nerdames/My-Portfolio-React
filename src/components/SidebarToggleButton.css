@@ -1,0 +1,22 @@
+/* Default: hide on large screens */
+.showsidebar {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  margin-bottom: 10px;
+  fill: var(--text);
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.showsidebar:hover {
+  background-color: var(--passive-hover);
+}
+
+/* ✅ Show toggle only on screens ≤768px */
+@media (max-width: 768px) {
+  .showsidebar {
+    display: flex;
+  }
+}

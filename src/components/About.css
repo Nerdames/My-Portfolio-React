@@ -8,16 +8,21 @@
   border-radius: var(--regular-border);
   margin: 20px 0;
   padding: 20px;
+  font-size: 14px; /* Matches Blogs and Designs base */
 }
 
 /* Section Header */
 .about-header {
   width: 100%;
   padding-left: 20px;
-  font-size: 30px;
+  font-size: 1.5rem; /* 24px */
   font-weight: 600;
   color: var(--background-1);
   text-align: left;
+}
+
+.about-header h2 {
+  font-size: 1.5rem; /* 24px */
 }
 
 /* Flex Container */
@@ -28,6 +33,8 @@
   gap: 20px;
   min-height: 600px;
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Each Section (Intro, Image, Skills) */
@@ -38,47 +45,54 @@
   border-radius: var(--regular-border);
   padding: 20px;
   box-sizing: border-box;
+  margin: 0 auto;
+  align-items: flex-start;
+  text-align: left;
 }
 
 /* Intro Section */
 .summary-intro {
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   padding: 0 10px;
 }
 
 .summary-intro .intro {
   color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* User Image */
-.user-image{
-    clip-path: circle();
-    object-fit: cover;
-    object-position: center;
-    position: relative;
-    width: 350px;
-    height: 350px;
+.user-image {
+  clip-path: circle();
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
 }
 
-.user-image img{
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.user-image img {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Skills Section */
 .skill {
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   row-gap: 20px;
+  margin: 0 auto;
 }
 
 .skill h2 {
-  font-size: 40px;
-  letter-spacing: 2px;
+  font-size: 1.375rem; /* 22px */
+  letter-spacing: 1px;
   color: var(--background-1);
 }
 
@@ -86,26 +100,33 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 16px;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  align-items: flex-start;
 }
 
 .skill ul li {
   display: flex;
   align-items: center;
   column-gap: 10px;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   fill: var(--background-1);
+  justify-content: flex-start;
 }
 
-/* Responsive adjustments for smaller screens */
+/* Medium screens */
 @media (max-width: 900px) {
+  #about-page {
+    font-size: 13.5px;
+  }
+
   .about {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   .about > div {
@@ -113,6 +134,7 @@
     align-items: center;
     text-align: center;
     height: auto;
+    margin: 0 auto;
   }
 
   .user-image {
@@ -127,24 +149,112 @@
     height: auto;
   }
 
-  .skill h2 {
-    font-size: 28px;
+  .summary-intro,
+  .skill {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .skill ul {
+    align-items: center;
   }
 
   .skill ul li {
-    font-size: 16px;
+    justify-content: center;
   }
 
-  /* Optional: reduce about-header font-size on smaller screens */
   .about-header {
-    font-size: 24px;
+    font-size: 1.25rem; /* 20px */
     padding-left: 10px;
   }
 
-  /* Adjust summary intro padding and alignment */
+  .summary-intro .intro {
+    font-size: 13.5px;
+    position: static;
+  }
+
   .summary-intro {
     padding: 0 10px;
-    align-items: center;
-    justify-content: center;
+  }
+
+  .skill h2 {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  .skill ul li {
+    font-size: 13.5px;
+  }
+}
+
+/* Smaller tablets and large phones */
+@media (max-width: 600px) {
+  #about-page {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+
+  .about > div {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .summary-intro {
+    padding: 0 5px;
+  }
+
+  .about-header {
+    font-size: 1.125rem; /* 18px */
+    padding-left: 8px;
+  }
+
+  .skill h2 {
+    font-size: 1.125rem; /* 18px */
+  }
+
+  .skill ul li {
+    font-size: 13px;
+  }
+
+  .summary-intro .intro {
+    font-size: 13px;
+    position: static;
+  }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+  #about-page {
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 12.5px;
+  }
+
+  .about > div {
+    padding: 8px;
+    margin: 8px auto;
+  }
+
+  .summary-intro {
+    padding: 0 4px;
+  }
+
+  .about-header {
+    font-size: 1rem; /* 16px */
+    padding-left: 6px;
+  }
+
+  .skill h2 {
+    font-size: 1rem; /* 16px */
+  }
+
+  .skill ul li {
+    font-size: 12.5px;
+  }
+
+  .summary-intro .intro {
+    font-size: 12.5px;
+    position: static;
   }
 }

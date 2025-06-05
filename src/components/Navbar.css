@@ -11,7 +11,7 @@ nav {
   list-style: none;
   margin-left: auto;
   margin-right: auto;
-  column-gap: 50px;
+  column-gap: 40px;
   padding: 0;
 }
 
@@ -24,7 +24,7 @@ nav {
 .pages li a {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;      /* Increased base font size */
   font-weight: 600;
   letter-spacing: 1px;
   padding: 0 12px;
@@ -44,8 +44,24 @@ nav {
   fill: var(--primary);
 }
 
+/* Responsive font sizes */
+@media (max-width: 1200px) {
+  .pages li a {
+    font-size: 14px;    /* Slightly smaller on medium screens */
+  }
+}
+
 @media (max-width: 900px) {
   .pages {
     column-gap: 20px;
+  }
+  .pages li a {
+    font-size: 12px;    /* Smaller font on smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .pages li a {
+    font-size: 12px;    /* Smallest font on very small screens */
   }
 }

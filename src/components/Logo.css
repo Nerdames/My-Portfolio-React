@@ -10,6 +10,6 @@ div {
     background: linear-gradient(#7839CF, #9250ee, #b381f8 );
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
 }

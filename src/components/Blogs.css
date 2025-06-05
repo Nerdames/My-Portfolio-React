@@ -16,19 +16,31 @@
 }
 
 #blogs-post header h2 {
-  font-size: 36px;
+  font-size: 1.875rem; /* 30px in rem */
   font-weight: 700;
   color: var(--background-1);
+  margin: 0; /* reset margin */
 }
 
 .view-all-btn {
   color: var(--background-1);
-  font-size: 16px;
+  font-size: 1rem; /* 16px in rem */
   text-decoration: underline;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-/* Shared list (blogs or designs) */
+.view-all-btn:hover,
+.view-all-btn:focus {
+  color: var(--active-hover);
+  outline: none;
+}
+
+/* Shared list container */
 .list {
   width: 100%;
   display: flex;
@@ -38,27 +50,31 @@
   margin-bottom: 20px;
 }
 
-/* Shared card styling */
+/* Card styling */
 .card {
   display: flex;
   flex-direction: column;
-  min-width: 32%;
-  max-width: 250px;
+  flex: 1 1 30%;
+  max-width: 30%;
   background-color: var(--background-1);
   color: var(--primary);
   border-radius: var(--regular-border);
   padding: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
   overflow: hidden;
+  cursor: default;
 }
 
-.card:hover {
+.card:hover,
+.card:focus-within {
   background-color: var(--overlay-bg);
   transform: scale(1.02);
   z-index: 1;
+  outline: none;
 }
 
+/* Make images responsive and interactive */
 .card img {
   width: 100%;
   height: 250px;
@@ -68,12 +84,14 @@
   transition: transform 0.3s ease;
 }
 
-.card img:hover {
+.card img:hover,
+.card img:focus {
   transform: scale(1.02);
   z-index: 2;
+  outline: none;
 }
 
-/* Card content section */
+/* Card content */
 .card-content {
   padding: 12px 8px;
   display: flex;
@@ -82,16 +100,17 @@
 }
 
 .card-content h3 {
-  font-size: 20px;
+  font-size: 1.25rem; /* 20px in rem */
   margin: 0 0 8px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-content p {
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px in rem */
   line-height: 1.4;
   margin: 0;
   display: -webkit-box;
@@ -101,12 +120,12 @@
   text-overflow: ellipsis;
 }
 
-/* Toggle button styles */
+/* Toggle and expand buttons */
 .toggle-button,
 .expand-btn {
   margin-top: 16px;
   padding: 10px 22px;
-  font-size: 16px;
+  font-size: 1rem;
   background-color: var(--background-1);
   color: var(--primary);
   border: none;
@@ -120,65 +139,70 @@
 }
 
 .toggle-button:hover,
-.expand-btn:hover {
+.expand-btn:hover,
+.toggle-button:focus,
+.expand-btn:focus {
   background-color: #fff;
+  outline: none;
 }
 
 /* Responsive design */
+
+/* Medium screens - still show 3 cards per row */
 @media (max-width: 1024px) {
   .card {
-    min-width: 48%;
-    max-width: 48%;
+    flex: 1 1 30%;
+    max-width: 30%;
   }
 }
 
+/* Small tablets - show 2 cards per row */
 @media (max-width: 768px) {
   .list {
     justify-content: center;
   }
 
   .card {
-    min-width: 90%;
-    max-width: 90%;
+    flex: 1 1 45%;
+    max-width: 45%;
   }
 
   .card-content h3 {
-    font-size: 18px;
+    font-size: 1.125rem; /* 18px */
   }
 
   .card-content p {
-    font-size: 13px;
+    font-size: 0.8125rem; /* 13px */
   }
 
   .toggle-button,
   .expand-btn {
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15px */
     padding: 8px 18px;
     min-width: 120px;
   }
 }
 
+/* Phones - full width card */
 @media (max-width: 480px) {
-  
-
   #blogs-post header h2 {
-    font-size: 28px;
+    font-size: 1.75rem; /* 28px */
   }
 
   .view-all-btn {
-    font-size: 14px;
+    font-size: 0.875rem; /* 14px */
   }
 
   .card {
-    min-width: 100%;
+    flex: 1 1 100%;
     max-width: 100%;
   }
 
   .card-content h3 {
-    font-size: 16px;
+    font-size: 1rem; /* 16px */
   }
 
   .card-content p {
-    font-size: 12px;
+    font-size: 0.75rem; /* 12px */
   }
 }

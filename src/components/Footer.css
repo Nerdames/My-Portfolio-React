@@ -5,3 +5,24 @@
   font-size: 14px;
   border-top: 1px solid var(--background-1);
 }
+
+/* Medium screens */
+@media (max-width: 900px) {
+  .site-footer {
+    font-size: 13px;
+  }
+}
+
+/* Tablets and large phones */
+@media (max-width: 600px) {
+  .site-footer {
+    font-size: 12px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+  .site-footer {
+    font-size: 11px;
+  }
+}

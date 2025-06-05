@@ -2,17 +2,28 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 20px;
+  gap: 8px; /* space between icon and text */
+  padding: 8px 16px;
+  font-size: 14px;
   color: var(--text);
   background-color: transparent;
-  border-radius: 30px;
-  border: 0.8px solid var(--primary);
+  border-radius: 20px;
+  border: 1px solid var(--primary);
   text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .view-resume:hover {
   background-color: var(--passive-hover);
   color: var(--primary);
+}
+
+/* Smaller screens */
+@media (max-width: 500px) {
+  .view-resume {
+    font-size: 12px;
+    padding: 6px 12px;
+    gap: 6px;
+  }
 }

@@ -1,11 +1,13 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "James Portfolio",
+  "name": "James Orjiene's Portfolio",
+  "description": "A portfolio showcasing the projects and skills of James Orjiene, a UI/UX designer and web developer.",
+  "lang": "en-US",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "Folio.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
       "src": "logo192.png",

@@ -1,20 +1,28 @@
+/* Card styling */
 .card {
-  background-color: var(--background-1);
-  border: 1px solid var(--primary);
-  border-radius: var(--regular-border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 100%;
-  max-width: 400px;
-  margin: 20px auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 30%;
+  max-width: 30%;
+  background-color: var(--background-1);
+  color: var(--primary);
+  border-radius: var(--regular-border);
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+  cursor: default;
+  margin: 0;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.card:hover,
+.card:focus-within {
+  background-color: var(--overlay-bg);
+  transform: scale(1.02);
+  z-index: 1;
+  outline: none;
 }
 
 .card img {
@@ -25,82 +33,80 @@
 }
 
 .card-content {
-  padding: 20px;
+  padding: 10px;
   color: var(--text);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--primary);
+  line-height: 1.3;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.4;
+  text-align: left;
+}
+
+.card-description-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .card-description {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.4;
   color: var(--text);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: center;
+  text-align: left;
+  min-width: 80%;
+  margin: 0;
 }
 
-.card-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 20px;
-}
-
-.card-actions a,
-.card-actions button {
-  text-decoration: none;
-  font-size: 0.875rem;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--primary);
+.card-actions a {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--background-1);
+  background-color: var(--primary);
+  border-radius: 4px;
+  text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .card-actions a:hover,
-.card-actions button:hover {
+.card-actions a:focus {
   background-color: var(--active-hover);
+  color: var(--background-1);
+  outline: none;
 }
 
-.card-actions a:focus,
-.card-actions button:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* Media query for tablets and smaller desktops */
+/* Responsive Styles */
 @media (max-width: 750px) {
   .card {
     max-width: 90%;
     margin: 20px auto;
   }
-
-  .card img {
-    height: auto;
-  }
 }
 
-/* Media query for phones and small devices */
 @media (max-width: 600px) {
   .card {
     max-width: 100%;
@@ -113,17 +119,47 @@
   }
 
   .card-title {
-    font-size: 1.25rem;
+    font-size: 13px;
   }
 
   .card-description {
-    font-size: 0.9rem;
-    line-height: 1.3;
+    font-size: 11px;
+    max-width: 60%;
   }
 
-  .card-actions a,
-  .card-actions button {
-    font-size: 0.8rem;
-    padding: 6px 10px;
+  .card-actions a {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    margin: 5px auto;
+    border-radius: calc(var(--regular-border) / 3);
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .card-description-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-description {
+    font-size: 10px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .card-actions a {
+    font-size: 10px;
+    padding: 3px 7px;
   }
 }

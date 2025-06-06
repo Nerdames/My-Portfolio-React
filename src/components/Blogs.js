@@ -1,72 +1,66 @@
+// components/Blogs.js
 import React, { useEffect, useState } from "react";
+import client from "../contentful";
 import Card from "./Card";
-import client, { urlFor } from "../lib/sanity";
-import { Link } from "react-router-dom";
 import "./Blogs.css";
 
-function Blogs() {
+const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [visibleCount, setVisibleCount] = useState(6);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const query = `*[_type == "blog"]{
-      _id,
-      title,
-      description,
-      mainImage
-    }`;
+    const fetchBlogs = async () => {
+      try {
+        const response = await client.getEntries({ content_type: "blog" });
+        const formattedBlogs = response.items.map(({ sys, fields }) => ({
+          id: sys.id,
+          title: fields.title,
+          description: fields.description,
+          image: fields.image?.fields?.file?.url
+            ? `https:${fields.image.fields.file.url}`
+            : "https://via.placeholder.com/300x200",
+          link: fields.link || "#",
+        }));
+        setBlogs(formattedBlogs);
+      } catch (error) {
+        console.error("Failed to fetch blog data:", error);
+      }
+    };
 
-    client
-      .fetch(query)
-      .then((data) => {
-        setBlogs(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Sanity fetch error:", error);
-        setLoading(false);
-      });
+    fetchBlogs();
   }, []);
 
-  const handleExpand = () => setVisibleCount((prev) => prev + 6);
-  const handleCollapse = () => setVisibleCount(6);
-
-  if (loading) return <p>Loading blogs...</p>;
+  const isExpandable = blogs.length > 6;
+  const visibleBlogs = blogs.slice(0, visibleCount);
 
   return (
     <section className="section" id="blogs-post">
       <header className="section-header">
         <h2>Blogs</h2>
-        <Link to="/all-blogs" className="view-all-btn">View All</Link>
+        <a href="/all-blogs" className="view-all-btn">View All</a>
       </header>
 
       <div className="list">
-        {blogs.length > 0 ? (
-          blogs.slice(0, visibleCount).map((blog) => (
-            <Card
-              key={blog._id}
-              title={blog.title}
-              description={blog.description}
-              image={urlFor(blog.mainImage).url()}
-            />
-          ))
-        ) : (
-          <p>No blogs available.</p>
-        )}
+        {visibleBlogs.map((blog) => (
+          <Card key={blog.id} {...blog} />
+        ))}
       </div>
 
-      {blogs.length > 6 && (
+      {isExpandable && (
         <div className="toggle-buttons">
           {visibleCount < blogs.length ? (
-            <button onClick={handleExpand} className="expand-btn">Show More</button>
+            <button onClick={() => setVisibleCount(visibleCount + 6)} className="expand-btn">
+              Show More
+            </button>
           ) : (
-            <button onClick={handleCollapse} className="expand-btn">Show Less</button>
+            <button onClick={() => setVisibleCount(6)} className="expand-btn">
+              Show Less
+            </button>
           )}
         </div>
       )}
     </section>
   );
-}
+};
 
 export default Blogs;

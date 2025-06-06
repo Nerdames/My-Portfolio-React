@@ -1,77 +1,89 @@
 import React, { useEffect, useState } from "react";
+import client from "../contentful"; // adjust path as needed
 import Card from "./Card";
-import CategoryMenu from "./CategoryMenu";
-import client, { urlFor } from "../lib/sanity";
-
-const categories = ["figma", "web", "mockups"];
+import "./Blogs.css"; // Use Blogs.css for styles
 
 function Designs() {
-  const [activeCategory, setActiveCategory] = useState("figma");
   const [designs, setDesigns] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("figma");
   const [visibleCount, setVisibleCount] = useState(6);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    const query = `*[_type == "design" && category == $category] | order(publishedAt desc) {
-      _id,
-      title,
-      description,
-      mainImage
-    }`;
-
     client
-      .fetch(query, { category: activeCategory })
-      .then((data) => {
-        setDesigns(data);
-        setVisibleCount(6);
-        setLoading(false);
+      .getEntries({ content_type: "design" }) // replace with your actual content type ID
+      .then((response) => {
+        const items = response.items.map((item) => {
+          const { title, description, image, category, link } = item.fields;
+          return {
+            id: item.sys.id,
+            title,
+            description:
+              description?.content?.[0]?.content?.[0]?.value || "", // Rich text fallback
+            image: image?.fields?.file?.url
+              ? `https:${image.fields.file.url}`
+              : "",
+            category,
+            link: link || "#",
+          };
+        });
+        setDesigns(items);
       })
-      .catch((err) => {
-        console.error("Sanity fetch error:", err);
-        setLoading(false);
-      });
-  }, [activeCategory]);
+      .catch(console.error);
+  }, []);
+
+  const filteredDesigns = designs.filter(
+    (design) => design.category === activeCategory
+  );
 
   const handleExpand = () => setVisibleCount((prev) => prev + 6);
   const handleCollapse = () => setVisibleCount(6);
 
-  if (loading) return <p>Loading designs...</p>;
-
   return (
-    <section className="section" id="designs-post">
+    <section className="section" id="designs-post"> {/* Use designs-post ID for styling */}
       <header className="section-header">
         <h2>Designs</h2>
-        {/* Optionally add: <Link to="/all-designs">View All</Link> */}
+        <a href="/all-designs" className="view-all-btn">
+          View All
+        </a>
       </header>
 
-      <CategoryMenu
-        categories={categories}
-        activeCategory={activeCategory}
-        onChange={(cat) => setActiveCategory(cat)}
-      />
+      <nav className="design-menu">
+        {["figma", "web", "mockups"].map((category) => (
+          <button
+            key={category}
+            className={`menu-item ${activeCategory === category ? "active" : ""}`}
+            onClick={() => {
+              setActiveCategory(category);
+              setVisibleCount(6);
+            }}
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </button>
+        ))}
+      </nav>
 
-      <div className="design-list">
-        {designs.length > 0 ? (
-          designs.slice(0, visibleCount).map((design) => (
-            <Card
-              key={design._id}
-              title={design.title}
-              description={design.description}
-              image={urlFor(design.mainImage).url()}
-            />
-          ))
-        ) : (
-          <p>No designs available.</p>
-        )}
+      <div className="list"> {/* Use `.list` container as per Blogs.css */}
+        {filteredDesigns.slice(0, visibleCount).map((design) => (
+          <Card
+            key={design.id}
+            title={design.title}
+            description={design.description}
+            image={design.image}
+            link={design.link}
+          />
+        ))}
       </div>
 
-      {designs.length > 6 && (
+      {filteredDesigns.length > 6 && (
         <div className="toggle-buttons">
-          {visibleCount < designs.length ? (
-            <button onClick={handleExpand} className="expand-btn">Show More</button>
+          {visibleCount < filteredDesigns.length ? (
+            <button onClick={handleExpand} className="expand-btn">
+              Show More
+            </button>
           ) : (
-            <button onClick={handleCollapse} className="expand-btn">Show Less</button>
+            <button onClick={handleCollapse} className="expand-btn">
+              Show Less
+            </button>
           )}
         </div>
       )}

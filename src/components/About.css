@@ -22,7 +22,10 @@
 }
 
 .about-header h2 {
-  font-size: 1.5rem; /* 24px */
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--background-1);
+  margin: 0;
 }
 
 /* Flex Container */

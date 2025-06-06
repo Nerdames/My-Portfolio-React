@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: flex-start;
     height: auto;
+    width: 80%;
+    max-width: 400px;
     position: absolute;
     left: 10%;
     top: 30%;
@@ -66,14 +68,14 @@
 }
 
 .intro::after {
-  animation-delay: 1s;
+  animation-delay: 1.5s;
   opacity: 0.5;
 }
 
 
 
 .bounce {
-  animation: bounce 1.5s ease-in-out infinite;
+  animation: bounce 2s ease-in-out infinite;
 }
 
 
@@ -94,7 +96,7 @@
 .intro p,
 .intro small{
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 @media (max-width: 600px) {

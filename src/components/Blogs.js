@@ -1,47 +1,64 @@
-import React, { useState } from "react";
-import Card from "./Card"; // previously BlogCard
-import "./Blogs.css"; // unified styles for blog/design/etc.
-
-const blogData = Array.from({ length: 18 }, (_, index) => ({
-  id: index + 1,
-  title: `Blog Post ${index + 1}`,
-  description:
-    "This is a short summary of the blog post. It highlights key points of the article to draw readers in.",
-  image: `https://picsum.photos/300/200?random=${index + 1}`,
-}));
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
+import client, { urlFor } from "../lib/sanity";
+import { Link } from "react-router-dom";
+import "./Blogs.css";
 
 function Blogs() {
+  const [blogs, setBlogs] = useState([]);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [loading, setLoading] = useState(true);
 
-  const handleExpand = () => {
-    setVisibleCount((prev) => prev + 6);
-  };
+  useEffect(() => {
+    const query = `*[_type == "blog"]{
+      _id,
+      title,
+      description,
+      mainImage
+    }`;
 
-  const handleCollapse = () => {
-    setVisibleCount(6);
-  };
+    client
+      .fetch(query)
+      .then((data) => {
+        setBlogs(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Sanity fetch error:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleExpand = () => setVisibleCount((prev) => prev + 6);
+  const handleCollapse = () => setVisibleCount(6);
+
+  if (loading) return <p>Loading blogs...</p>;
 
   return (
     <section className="section" id="blogs-post">
       <header className="section-header">
         <h2>Blogs</h2>
-        <a href="/all-blogs" className="view-all-btn">View All</a>
+        <Link to="/all-blogs" className="view-all-btn">View All</Link>
       </header>
 
       <div className="list">
-        {blogData.slice(0, visibleCount).map((blog) => (
-          <Card
-            key={blog.id}
-            title={blog.title}
-            description={blog.description}
-            image={blog.image}
-          />
-        ))}
+        {blogs.length > 0 ? (
+          blogs.slice(0, visibleCount).map((blog) => (
+            <Card
+              key={blog._id}
+              title={blog.title}
+              description={blog.description}
+              image={urlFor(blog.mainImage).url()}
+            />
+          ))
+        ) : (
+          <p>No blogs available.</p>
+        )}
       </div>
 
-      {blogData.length > 6 && (
+      {blogs.length > 6 && (
         <div className="toggle-buttons">
-          {visibleCount < blogData.length ? (
+          {visibleCount < blogs.length ? (
             <button onClick={handleExpand} className="expand-btn">Show More</button>
           ) : (
             <button onClick={handleCollapse} className="expand-btn">Show Less</button>

@@ -1,94 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import "./Designs.css";
+import CategoryMenu from "./CategoryMenu";
+import client, { urlFor } from "../lib/sanity";
 
-const designData = {
-  figma: Array.from({ length: 18 }, (_, index) => ({
-    id: index + 1,
-    title: `Figma Design ${index + 1}`,
-    description:
-      "This is a short summary of the design project. It highlights key features to showcase the design.",
-    image: `https://picsum.photos/300/250?random=figma${index + 1}`,
-  })),
-  web: Array.from({ length: 18 }, (_, index) => ({
-    id: index + 1,
-    title: `Web Design ${index + 1}`,
-    description:
-      "This is a short summary of the design project. It highlights key features to showcase the design.",
-    image: `https://picsum.photos/300/250?random=web${index + 1}`,
-  })),
-  mockups: Array.from({ length: 18 }, (_, index) => ({
-    id: index + 1,
-    title: `Mockup Design ${index + 1}`,
-    description:
-      "This is a short summary of the design project. It highlights key features to showcase the design.",
-    image: `https://picsum.photos/300/250?random=mockup${index + 1}`,
-  })),
-};
+const categories = ["figma", "web", "mockups"];
 
 function Designs() {
   const [activeCategory, setActiveCategory] = useState("figma");
+  const [designs, setDesigns] = useState([]);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [loading, setLoading] = useState(true);
 
-  // Filter designs based on active category
-  const filteredDesigns = designData[activeCategory];
+  useEffect(() => {
+    setLoading(true);
+    const query = `*[_type == "design" && category == $category] | order(publishedAt desc) {
+      _id,
+      title,
+      description,
+      mainImage
+    }`;
 
-  const handleExpand = () => {
-    setVisibleCount((prev) => prev + 6);
-  };
+    client
+      .fetch(query, { category: activeCategory })
+      .then((data) => {
+        setDesigns(data);
+        setVisibleCount(6);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Sanity fetch error:", err);
+        setLoading(false);
+      });
+  }, [activeCategory]);
 
-  const handleCollapse = () => {
-    setVisibleCount(6);
-  };
+  const handleExpand = () => setVisibleCount((prev) => prev + 6);
+  const handleCollapse = () => setVisibleCount(6);
+
+  if (loading) return <p>Loading designs...</p>;
 
   return (
     <section className="section" id="designs-post">
       <header className="section-header">
         <h2>Designs</h2>
-        <a href="/all-designs" className="view-all-btn">
-          View All
-        </a>
+        {/* Optionally add: <Link to="/all-designs">View All</Link> */}
       </header>
 
-      {/* Menu below header */}
-      <nav className="design-menu">
-        {["figma", "web", "mockups"].map((category) => (
-          <button
-            key={category}
-            className={`menu-item ${activeCategory === category ? "active" : ""}`}
-            onClick={() => {
-              setActiveCategory(category);
-              setVisibleCount(6); // reset visible count on category change
-            }}
-          >
-            {category.charAt(0).toUpperCase() + category.slice(1)} 
-          </button>
-        ))}
-      </nav>
+      <CategoryMenu
+        categories={categories}
+        activeCategory={activeCategory}
+        onChange={(cat) => setActiveCategory(cat)}
+      />
 
-      {/* Design cards */}
       <div className="design-list">
-        {filteredDesigns.slice(0, visibleCount).map((design) => (
-          <Card
-            key={design.id}
-            title={design.title}
-            description={design.description}
-            image={design.image}
-          />
-        ))}
+        {designs.length > 0 ? (
+          designs.slice(0, visibleCount).map((design) => (
+            <Card
+              key={design._id}
+              title={design.title}
+              description={design.description}
+              image={urlFor(design.mainImage).url()}
+            />
+          ))
+        ) : (
+          <p>No designs available.</p>
+        )}
       </div>
 
-      {/* Toggle show more/less buttons */}
-      {filteredDesigns.length > 6 && (
+      {designs.length > 6 && (
         <div className="toggle-buttons">
-          {visibleCount < filteredDesigns.length ? (
-            <button onClick={handleExpand} className="expand-btn">
-              Show More
-            </button>
+          {visibleCount < designs.length ? (
+            <button onClick={handleExpand} className="expand-btn">Show More</button>
           ) : (
-            <button onClick={handleCollapse} className="expand-btn">
-              Show Less
-            </button>
+            <button onClick={handleCollapse} className="expand-btn">Show Less</button>
           )}
         </div>
       )}
